@@ -1,0 +1,76 @@
+public class Program
+{
+    public interface IMovement // interface for movement behaviors   /ASSIGNMENT/
+    {
+        void Move(); // assign movement behavior FUNCTION
+    }
+    public class WalkMovement : IMovement // inherits movement behavior for walking   /IMPLEMENTATION/
+    {
+        public void  Move() // implementation of Move method for walking
+        {
+            Console.WriteLine("Walking");
+        }
+    }
+    public class Dash : IMovement // inherits movement behavior for dashing   /IMPLEMENTATION/
+    {
+        public void Move() // implementation of Move method for dashing
+        {
+            Console.WriteLine("Dashing");
+        }
+    }
+    public interface IAttack // interface for attack behaviors   /ASSIGNMENT/
+    {
+        void Execute(); // assign attack behavior FUNCTION
+    }
+    public class MeleeAttack : IAttack // inherits attack behavior for melee   /IMPLEMENTATION/
+    {
+        public void Execute() // implementation of Execute method for melee attack
+        {
+            Console.WriteLine("Performing melee attack!");
+        }
+    }
+    public class MagicAttack : IAttack // inherits attack behavior for magic   /IMPLEMENTATION/
+    {
+        public void Execute()
+        {
+            Console.WriteLine("Performing magic attack!");
+        }
+    }
+    public class Enemy // Enemy class that uses IAttack behavior  /USE/
+    {
+        private IMovement _movement; // composition: Enemy HAS-A IMovement behavior 
+        private IAttack _attack; // composition: Enemy HAS-A IAttack behavior 
+        public Enemy(IAttack attack, IMovement movement) // constructor injection of attack behavior /DEPENDENCY INJECTION/
+        {
+            this._attack = attack; 
+            this._movement = movement;
+        }
+
+        public void Move() // method to perform movement using assigned behavior 
+        {
+            _movement.Move();
+        }
+        public void Attack() // method to perform attack using assigned behavior  
+        {
+            _attack.Execute();
+        }
+    
+
+    public static void Main(string[] args)
+    {
+            // Question 11
+            IMovement walk = new WalkMovement();
+            IMovement dash = new Dash();
+            Enemy enemy1 = new Enemy(new MeleeAttack(), walk);
+            enemy1.Move();
+            enemy1.Attack();
+            Enemy enemy2 = new Enemy(new MagicAttack(), dash);
+            enemy2.Move();
+            enemy2.Attack();
+            Console.ReadLine();
+    }
+}
+
+
+
+
